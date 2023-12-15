@@ -57,10 +57,15 @@ const Landing: FunctionComponent = () => {
           <h3 className={classes.user__info_name}>Эрик Якубу</h3>
           <div className={classes.user__info_links}>
             {links.map((link, index) => (
-              <div key={index} className={classes.user__info_links__link}>
+              <a
+                key={index}
+                className={classes.user__info_links__link}
+                target="_blank"
+                href="github.com"
+              >
                 <FaFolder />
                 <span>{link}</span>
-              </div>
+              </a>
             ))}
           </div>
         </div>
