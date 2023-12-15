@@ -1,0 +1,111 @@
+@mixin container {
+  background: white;
+  border-radius: 16px;
+  padding: 32px;
+  width: 900px;
+  max-width: 100vw;
+  height: 700px;
+  max-height: 100vh;
+  box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.1);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  @media (max-width: 575px) {
+    height: 100vh;
+    border-radius: 0;
+    justify-content: space-between;
+  }
+}
+@mixin containerForm {
+  background: white;
+  border-radius: 16px;
+  padding: min(62px, 5vh) min(110px, 5vw);
+  width: 900px;
+  max-width: 100vw;
+  height: fit-content;
+  max-height: 100vh;
+  box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.1);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  @media (max-width: 575px) {
+    height: 100vh;
+    border-radius: 0;
+    justify-content: space-between;
+  }
+}
+
+@mixin modal {
+  width: 460px;
+  max-width: 90vw;
+  padding: 32px;
+  border-radius: 16px;
+  box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: white;
+}
+
+@mixin font-100 {
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px;
+}
+
+@mixin font-200 {
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+@mixin font-300 {
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16px;
+}
+
+@mixin button($background, $color) {
+  @include font-100();
+  margin-top: 24px;
+  display: inline-flex;
+  padding: 12px 16px;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  border-radius: 4px;
+  background: $background;
+  color: $color;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+@mixin formLabel() {
+  margin-bottom: 8px;
+  color: $Grey-800;
+  @include font-100;
+}
+
+@mixin formInput($width) {
+  padding: 12px;
+  width: $width;
+  max-width: 100%;
+  border-radius: 4px;
+  // margin-bottom: 24px;
+  outline: none;
+  border: 1px solid rgba(0, 0, 0, 0.16);
+  @include font-200;
+
+  &::placeholder {
+    @include font-200;
+    color: rgba(0, 0, 0, 0.48);
+  }
+}

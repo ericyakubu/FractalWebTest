@@ -1,0 +1,103 @@
+@import "../../styles/mixins.scss";
+@import "../../styles/variables.scss";
+
+.container {
+  @include container;
+
+  .user {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+
+    @media (max-width: 575px) {
+      gap: 12px;
+    }
+
+    &__avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      overflow: hidden;
+      background: #d5e4f7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      span {
+        font-size: 36px;
+        height: fit-content;
+        line-height: 1;
+      }
+
+      @media (max-width: 575px) {
+        width: 50px;
+        min-width: 50px;
+        height: 50px;
+        min-height: 50px;
+
+        span {
+          font-size: 24px;
+        }
+      }
+    }
+
+    &__info {
+      &_name {
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 26px;
+        color: $Grey-800;
+        margin-bottom: 8px;
+      }
+      &_links {
+        display: flex;
+        align-items: center;
+        gap: 24px;
+
+        &__link {
+          display: flex;
+          align-items: center;
+          gap: 4px;
+
+          svg {
+            color: #ccc;
+          }
+
+          span {
+            color: $Purple-100;
+
+            @include font-300;
+          }
+        }
+      }
+    }
+  }
+
+  .form {
+    padding-top: 24px;
+    display: flex;
+    flex-direction: column;
+    &__label {
+      @include formLabel;
+    }
+
+    &__input {
+      background: rgba(0, 0, 0, 0.04);
+      @include formInput(400px);
+    }
+
+    &__btn {
+      @include button($Purple-100, white);
+    }
+
+    p {
+      height: 24px;
+      @include formLabel;
+      margin: 8px 0 8px;
+      color: #0000007a;
+    }
+  }
+}

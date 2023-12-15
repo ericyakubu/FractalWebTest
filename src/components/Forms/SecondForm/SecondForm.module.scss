@@ -1,0 +1,166 @@
+@import "../../../styles/mixins.scss";
+@import "../../../styles/variables.scss";
+
+.container {
+  @include containerForm;
+
+  .form {
+    // height: 70%;
+    &__label {
+      @include formLabel;
+    }
+
+    &__checkboxes,
+    &__radiobuttons {
+      p {
+        margin-bottom: 0;
+      }
+
+      @media (max-width: 575px) {
+        display: inline-block;
+        width: 50%;
+      }
+    }
+
+    &__advantages {
+      @media (max-width: 575px) {
+        display: inline-block;
+        max-height: 250px;
+        overflow-y: scroll;
+      }
+    }
+
+    &__input {
+      @include formInput(300px);
+      margin-bottom: 0;
+    }
+
+    &__add {
+      @include button(white, $Purple-100);
+      box-shadow: inset 0px 0px 0px 2px $Purple-100;
+      font-size: 20px;
+      line-height: 1;
+      display: block;
+    }
+
+    &__checkboxes {
+      margin: 24px 0;
+    }
+
+    &_buttons {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 40px;
+      &__return {
+        @include button(white, $Purple-100);
+        box-shadow: inset 0px 0px 0px 2px $Purple-100;
+      }
+
+      &__next {
+        @include button($Purple-100, white);
+      }
+    }
+  }
+}
+
+.advantage {
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  button {
+    background: none;
+  }
+
+  img {
+    width: 20px;
+  }
+}
+
+.containerCheck,
+.containerRadio {
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding-left: 25px;
+  cursor: pointer;
+  user-select: none;
+  width: fit-content;
+  @include font-200;
+
+  & input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+
+  .checkmark {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    height: 16px;
+    width: 16px;
+    border-radius: 4px;
+
+    transform: translateY(-50%);
+    border: 1px solid rgba(0, 0, 0, 0.24);
+
+    &:after {
+      content: "";
+      position: absolute;
+      display: none;
+    }
+  }
+
+  &:hover input ~ .checkmark {
+    background-color: #ccc;
+  }
+
+  & input:checked ~ .checkmark {
+    background-color: #2196f3;
+  }
+
+  & input:checked ~ .checkmark:after {
+    display: block;
+  }
+
+  .checkmark:after {
+    left: 50%;
+    top: 50%;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg) translate(-100%, -15%);
+  }
+}
+
+.containerCheck {
+  .checkmark {
+    border-radius: 4px;
+  }
+
+  .checkmark:after {
+    width: 4px;
+    height: 8px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg) translate(-100%, -15%);
+  }
+}
+
+.containerRadio {
+  .checkmark {
+    border-radius: 50%;
+  }
+
+  .checkmark:after {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: white;
+    transform: translate(-50%, -50%);
+  }
+}

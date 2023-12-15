@@ -1,0 +1,46 @@
+@import "../../../styles/mixins.scss";
+@import "../../../styles/variables.scss";
+
+.container {
+  @include containerForm;
+
+  .form {
+    display: flex;
+    flex-direction: column;
+
+    p {
+      height: 24px;
+      @include formLabel;
+      margin: 8px 0 16px;
+      color: #0000007a;
+    }
+
+    &_label {
+      @include formLabel;
+    }
+
+    &_input {
+      @include formInput(300px);
+    }
+
+    &_select {
+      @include formInput(300px);
+      background: none;
+    }
+
+    &_buttons {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 10px;
+      &__return {
+        @include button(white, $Purple-100);
+        box-shadow: inset 0px 0px 0px 2px $Purple-100;
+      }
+
+      &__next {
+        @include button($Purple-100, white);
+      }
+    }
+  }
+}
