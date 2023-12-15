@@ -1,9 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { changeURL } from "../../utils";
+import { RootState } from "..";
 
 interface InitialStateType {
-  currentPage: 0 | 1 | 2 | 3;
+  page?: boolean;
   phone: string;
   email: string;
   nickname: string;
@@ -15,7 +16,7 @@ interface InitialStateType {
   radioGroup: [boolean, boolean, boolean];
   aboutMe: string;
 
-  modal: {
+  modal?: {
     success: boolean;
     error: boolean;
   };
@@ -24,7 +25,7 @@ interface InitialStateType {
 const URL = "";
 
 const initialState: InitialStateType = {
-  currentPage: 0,
+  page: false,
   phone: "",
   email: "",
   nickname: "",
@@ -45,11 +46,10 @@ export const postForm = createAsyncThunk(
   "form/postForm",
   async (_, thunkAPI) => {
     try {
-      const check = thunkAPI.getState();
+      const check = thunkAPI.getState() as RootState;
       const form = { ...check.form };
 
-      delete form.modal;
-      delete form.currentPage;
+      delete form?.modal;
       return await axios.post(URL, form);
     } catch (error) {
       console.log(error);
@@ -65,6 +65,7 @@ export const formStore = createSlice({
       state.email = action.payload.email;
       state.phone = action.payload.phone;
       changeURL(1);
+      state.page = !state.page;
     },
     submitFirstForm: (state, action) => {
       state.nickname = action.payload.nickname;
@@ -72,6 +73,7 @@ export const formStore = createSlice({
       state.surname = action.payload.surname;
       state.sex = action.payload.sex;
       changeURL(2);
+      state.page = !state.page;
     },
     submitSecondForm: (state, action) => {
       if (action.payload.category === "group") {
@@ -86,15 +88,14 @@ export const formStore = createSlice({
       if (action.payload.category === "advantages") {
         state.advantages = action.payload.newAdvantages;
         changeURL(3);
+        state.page = !state.page;
       }
     },
     submitThirdForm: (state, action) => {
       state.aboutMe = action.payload.aboutMe;
     },
-    handleGoBack: (state, action) => {
-      state.currentPage = action.payload;
-    },
     handleShowModal: (state, action) => {
+      if (!state.modal) return;
       if (action.payload === "success") {
         state.modal.success = true;
         state.modal.error = false;
@@ -106,18 +107,21 @@ export const formStore = createSlice({
         state.modal.error = false;
       }
     },
+    handleGoBack: (state) => {
+      state.page = !state.page;
+      const urlParams = new URLSearchParams(window.location.search);
+      const step = Number(urlParams.get("step"));
+
+      if (step === 2 || step === 3) changeURL(step - 1);
+      if (step === 1) changeURL(0);
+    },
     handleFinish: (state) => {
+      if (!state.modal) return;
       state.modal.success = false;
       state.modal.error = false;
-      state.currentPage = 0;
-      let currentUrl = window.location.href;
+      changeURL(0);
 
-      if (currentUrl.includes("step=")) {
-        const regex = /[?&]step=[^&]+/;
-        currentUrl = currentUrl.replace(regex, "");
-        currentUrl = currentUrl.replace(/[?&]$/, "");
-        window.history.replaceState({}, "", currentUrl);
-      }
+      state.page = !state.page;
     },
   },
 });

@@ -1,11 +1,12 @@
 import { FunctionComponent } from "react";
-import classes from "./Landing.module.scss";
-import { FaFolder } from "react-icons/fa";
-import { useForm, SubmitHandler } from "react-hook-form";
-import * as Yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
-import InputMask from "react-input-mask";
 import { useDispatch } from "react-redux";
+import { useForm, SubmitHandler } from "react-hook-form";
+import InputMask from "react-input-mask";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { FaFolder } from "react-icons/fa";
+import * as Yup from "yup";
+
+import classes from "./Landing.module.scss";
 import { handleShowModal, submitLanding } from "../../redux/formStore";
 
 interface Inputs {
@@ -50,10 +51,10 @@ const Landing: FunctionComponent = () => {
     <main className={classes.container}>
       <section className={classes.user}>
         <div className={classes.user__avatar}>
-          <span>EY</span>
+          <span>ЭЯ</span>
         </div>
         <div className={classes.user__info}>
-          <h3 className={classes.user__info_name}>Eric Yakubu</h3>
+          <h3 className={classes.user__info_name}>Эрик Якубу</h3>
           <div className={classes.user__info_links}>
             {links.map((link, index) => (
               <div key={index} className={classes.user__info_links__link}>

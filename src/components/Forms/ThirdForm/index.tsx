@@ -1,8 +1,8 @@
 import { FormEvent, FunctionComponent, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
 import classes from "./ThirdForm.module.scss";
 import ProgressBar from "../../ProgressBar";
-import { AppDispatch, RootState } from "../../../redux";
-import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch } from "../../../redux";
 import {
   handleFinish,
   handleGoBack,
@@ -13,7 +13,6 @@ import {
 
 const ThirdForm: FunctionComponent = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { currentPage } = useSelector((state: RootState) => state.form);
   const textRef = useRef<HTMLTextAreaElement>(null);
   const [count, setCount] = useState(0);
 
@@ -36,7 +35,11 @@ const ThirdForm: FunctionComponent = () => {
   };
 
   const handleReturn = () => {
-    dispatch(handleGoBack(currentPage - 1));
+    dispatch(handleGoBack());
+  };
+
+  const errorCheck = () => {
+    if (count > 200) dispatch(handleShowModal("error"));
   };
 
   return (
@@ -67,7 +70,11 @@ const ThirdForm: FunctionComponent = () => {
           >
             Назад
           </button>
-          <button className={classes.form_buttons__next} type="submit">
+          <button
+            className={classes.form_buttons__next}
+            type="submit"
+            onClick={errorCheck}
+          >
             Далее
           </button>
         </div>

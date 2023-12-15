@@ -4,25 +4,30 @@ import Landing from "./components/Landing";
 import Modal from "./components/Modal";
 import "./styles/global.scss";
 import { RootState } from "./redux";
+import { useEffect, useState } from "react";
 
 function App() {
-  const { modal } = useSelector((state: RootState) => state.form);
-  const urlParams = new URLSearchParams(window.location.search);
-  const step = urlParams.get("step");
+  const { modal, page } = useSelector((state: RootState) => state.form);
+  const [step, setStep] = useState<number>();
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    setStep(Number(urlParams.get("step")));
+  }, [page]);
 
   return (
     <>
       {!step ? (
         <Landing />
-      ) : step === "1" ? (
+      ) : step === 1 ? (
         <FirstForm />
-      ) : step === "2" ? (
+      ) : step === 2 ? (
         <SecondForm />
-      ) : step === "3" ? (
+      ) : step === 3 ? (
         <ThirdForm />
       ) : null}
-      {modal.success && <Modal type="success" />}
-      {modal.error && <Modal type="error" />}
+      {modal && modal.success && <Modal type="success" />}
+      {modal && modal.error && <Modal type="error" />}
     </>
   );
 }

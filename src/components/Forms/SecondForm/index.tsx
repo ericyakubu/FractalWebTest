@@ -1,10 +1,10 @@
 import { ChangeEvent, FunctionComponent, MouseEvent, useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
 import classes from "./SecondForm.module.scss";
 import Trash from "../../../assets/trash.png";
 import ProgressBar from "../../ProgressBar";
-import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../redux";
-import { SubmitHandler, useForm } from "react-hook-form";
 import { handleGoBack, submitSecondForm } from "../../../redux/formStore";
 
 interface Inputs {
@@ -15,7 +15,7 @@ const SecondForm: FunctionComponent = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { handleSubmit } = useForm<Inputs>();
   const checkRegEx = /^[A-Za-zА-Яа-я0-9\s,.!?]*$/u;
-  const { currentPage, checkGroup, radioGroup } = useSelector(
+  const { checkGroup, radioGroup } = useSelector(
     (state: RootState) => state.form
   );
   const [advantages, setAdvantages] = useState([""]);
@@ -54,10 +54,6 @@ const SecondForm: FunctionComponent = () => {
     dispatch(submitSecondForm({ category: "advantages", newAdvantages }));
   };
 
-  const handleReturn = () => {
-    dispatch(handleGoBack(currentPage - 1));
-  };
-
   const handleAddAdvantage = () => {
     setAdvantages([...advantages, ""]);
   };
@@ -79,6 +75,10 @@ const SecondForm: FunctionComponent = () => {
       updatedAdvantages[index] = value;
       setAdvantages(updatedAdvantages);
     }
+  };
+
+  const handleReturn = () => {
+    dispatch(handleGoBack());
   };
 
   return (
@@ -150,10 +150,13 @@ const SecondForm: FunctionComponent = () => {
           <button
             className={classes.form_buttons__return}
             onClick={handleReturn}
+            type="button"
           >
             Назад
           </button>
-          <button className={classes.form_buttons__next}>Далее</button>
+          <button className={classes.form_buttons__next} type="submit">
+            Далее
+          </button>
         </div>
       </form>
     </main>

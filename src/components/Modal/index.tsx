@@ -1,10 +1,10 @@
-import { FunctionComponent, useRef } from "react";
+import { FunctionComponent, useRef, MouseEvent } from "react";
+import { useDispatch } from "react-redux";
 import classes from "./Modal.module.scss";
 import Check from "../../assets/check.svg";
 import Error from "../../assets/error.png";
 import Close from "../../assets/close.png";
 import { AppDispatch } from "../../redux";
-import { useDispatch } from "react-redux";
 import { handleShowModal } from "../../redux/formStore";
 
 interface Props {
@@ -19,7 +19,7 @@ const Modal: FunctionComponent<Props> = ({ type }) => {
     dispatch(handleShowModal("false"));
   };
 
-  const handleOutsideClick = (e) => {
+  const handleOutsideClick = (e: MouseEvent<HTMLDivElement>) => {
     if (!containerRef.current) return;
     if (e.target === containerRef.current) hideModal();
   };

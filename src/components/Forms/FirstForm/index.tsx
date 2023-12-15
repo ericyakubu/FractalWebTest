@@ -1,12 +1,12 @@
 import { FunctionComponent } from "react";
-import classes from "./FristForm.module.scss";
-import ProgressBar from "../../ProgressBar";
-
 import { useForm, SubmitHandler } from "react-hook-form";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../../redux";
+import { useDispatch } from "react-redux";
+
+import classes from "./FristForm.module.scss";
+import { AppDispatch } from "../../../redux";
+import ProgressBar from "../../ProgressBar";
 import {
   handleGoBack,
   handleShowModal,
@@ -25,7 +25,6 @@ const FirstForm: FunctionComponent = () => {
   const alphaRegExp = /^[a-zA-Zа-яА-Я]+$/;
   const allowedSexes = ["man", "woman"];
   const dispatch = useDispatch<AppDispatch>();
-  const { currentPage } = useSelector((state: RootState) => state.form);
 
   const validationSchema = Yup.object().shape({
     nickname: Yup.string()
@@ -63,7 +62,7 @@ const FirstForm: FunctionComponent = () => {
   };
 
   const handleReturn = () => {
-    dispatch(handleGoBack(currentPage - 1));
+    dispatch(handleGoBack());
   };
 
   return (
