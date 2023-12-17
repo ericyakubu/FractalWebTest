@@ -100,6 +100,7 @@ const SecondForm: FunctionComponent = () => {
               <button
                 id={`button-remove-${index + 1}`}
                 onClick={() => handleDeleteAdvantage(index)}
+                type="button"
               >
                 <img src={Trash} alt="" />
               </button>
